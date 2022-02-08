@@ -31,41 +31,36 @@ public class FoodController {
 
 	@Autowired
 	FoodService foodService;
-	
-	
+
 //							ADDING FOOD TO THE DATABASE
-	
+
 	@PostMapping("")
-	public ResponseEntity<?> addFood(@Valid @RequestBody Food food) throws AlreadyExistsException
-	{
-		Food food1=foodService.addFood(food);
+	public ResponseEntity<?> addFood(@Valid @RequestBody Food food) throws AlreadyExistsException {
+		Food food1 = foodService.addFood(food);
 		return ResponseEntity.status(201).body(food1);
 	}
-	
+
 //                           GETTING FOOD BY ID FROM THE DATABASE	
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getFoodById(@PathVariable("id")Integer id) throws IdNotFoundException
-	{
-		Food food=foodService.getFoodById(id);
+	public ResponseEntity<?> getFoodById(@PathVariable("id") Integer id) throws IdNotFoundException {
+		Food food = foodService.getFoodById(id);
 		return ResponseEntity.status(200).body(food);
 	}
-	
+
 //                          UPDATING THE RECORD IN THE DATABASE
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateFoodById(@PathVariable("id")Integer id,Food food) throws IdNotFoundException
-	{
-		Food food1=foodService.getFoodById(id);
-		return ResponseEntity.status(200).body(food1);
+	public ResponseEntity<?> updateFoodById(@PathVariable("id") Integer id, Food food) throws IdNotFoundException {
+		Food food1 = foodService.getFoodById(id);
+		return ResponseEntity.status(200).body(food);
 	}
-	
+
 //                           GETTING ALL THE FOOD AVAILABLE	
-	
+
 	@GetMapping("/")
-	public ResponseEntity<?> getAllFood()
-	{
-		Optional<List<Food>> optional=foodService.getAllFood();
+	public ResponseEntity<?> getAllFood() {
+		Optional<List<Food>> optional = foodService.getAllFood();
 		if (optional.isEmpty()) {
 			Map<String, String> map = new HashMap<>();
 			map.put("string", "no records found");
@@ -73,25 +68,24 @@ public class FoodController {
 		}
 		return ResponseEntity.ok(optional);
 	}
-	
+
 //                         DELETING FOOD FROM THE DATABASE
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?>deleteFoodById(@PathVariable("id")Integer id) throws IdNotFoundException
-	{
-		String result=foodService.deleteFoodById(id);
+	public ResponseEntity<?> deleteFoodById(@PathVariable("id") Integer id) throws IdNotFoundException {
+		String result = foodService.deleteFoodById(id);
 		Map<String, String> map = new HashMap<>();
-		if (result.equals("successfully deleted food"))
+		if (result.equals("successfully deleted food")) {
 			map.put("string", "record deleted successfully");
-		return ResponseEntity.status(200).body(map);
+			return ResponseEntity.status(200).body(map);
+		}
+		return ResponseEntity.badRequest().body(map);
 	}
-	
-//                           GETTING FOOD TO TYPE
-	
-	@GetMapping("/{type}")
-	public ResponseEntity<?> getFoodByType(@PathVariable("type") TYPE type)
-	{
-		Optional<List<Food>> optional=foodService.getFoodByType(type);
+
+	// GET FOOD BY TYPE
+	@GetMapping("/type/{type}")
+	public ResponseEntity<?> getFoodByType(@PathVariable("type") TYPE type) {
+		Optional<List<Food>> optional = foodService.getFoodByType(type);
 		if (optional.isEmpty()) {
 			Map<String, String> map = new HashMap<>();
 			map.put("string", "no records found");
@@ -99,4 +93,4 @@ public class FoodController {
 		}
 		return ResponseEntity.ok(optional);
 	}
- }
+}
