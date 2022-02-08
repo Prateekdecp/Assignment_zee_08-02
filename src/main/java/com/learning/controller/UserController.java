@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.learning.dto.Login;
 import com.learning.dto.User;
 import com.learning.exception.AlreadyExistsException;
 import com.learning.exception.IdNotFoundException;
+import com.learning.service.LoginService;
 import com.learning.service.UserService;
 
 @RestController
@@ -30,6 +32,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	LoginService loginService;
 	
 // 						ADDING USER TO THE DATABASE	
 
@@ -79,11 +84,11 @@ public class UserController {
 	
 	//                 AUTHENTICATION OF USER
 	@PostMapping("/authenticate")
-	public ResponseEntity<?> authenticateUser(@RequestBody User user)
+	public ResponseEntity<?> authenticateUser(@RequestBody Login login)
 	{
 		Map<String, String> map = new HashMap<>();
-		boolean res=userService.authenticateUser(user.getEmail(), user.getPassword());
-		if(res)
+		boolean result=loginService.authenticateUser(login);
+		if(result)
 			map.put("message", "success");
 		else
 			map.put("message", "failure");

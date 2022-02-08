@@ -19,5 +19,11 @@ public class LoginServiceImpl implements LoginService {
 		
 		return login1!=null?"success":"failure";
 	}
+	@Override
+	public boolean authenticateUser(Login login) {
+		// TODO Auto-generated method stub
+		Login login2=loginRepository.getById(login.getEmail());
+		return login2!=null;
+	}
 
 }

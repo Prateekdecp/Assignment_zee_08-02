@@ -84,10 +84,5 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	@Override
-	public boolean authenticateUser(String email, String password) {
-		// TODO Auto-generated method stub
-		return userRepository.existsByEmailAndPassword(email, password);
-	}
 
 }

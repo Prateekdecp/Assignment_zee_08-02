@@ -5,4 +5,5 @@ import com.learning.dto.Login;
 public interface LoginService {
 
 	public String addCredentials(Login login);
+	public boolean authenticateUser(Login login);
 }

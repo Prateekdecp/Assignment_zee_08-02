@@ -14,5 +14,4 @@ public interface UserService {
 	public Optional<List<User>> getAllUsers();
 	public String deleteUserById(Integer id) throws IdNotFoundException;
 	public User updateUserById(Integer id,User user) throws IdNotFoundException;
-	public boolean authenticateUser(String email,String password);
 }
