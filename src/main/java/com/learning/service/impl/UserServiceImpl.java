@@ -7,13 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.learning.dto.Food;
-import com.learning.dto.Login;
 import com.learning.dto.User;
 import com.learning.exception.AlreadyExistsException;
 import com.learning.exception.IdNotFoundException;
-import com.learning.repository.LoginRepository;
 import com.learning.repository.UserRepository;
-import com.learning.service.LoginService;
 import com.learning.service.UserService;
 
 @Service
@@ -21,9 +18,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
-	
-	@Autowired
-	LoginService loginservice;
 
 	@Override
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)
@@ -33,8 +27,7 @@ public class UserServiceImpl implements UserService {
 			throw new AlreadyExistsException("!! user already exists !!");
 		User user1 = userRepository.save(user);
 		if (user1 != null) {
-			Login login=new Login(user.getEmail(),user.getPassword());
-			loginservice.addCredentials(login);
+			
 			return user1;
 		}
 		return null;

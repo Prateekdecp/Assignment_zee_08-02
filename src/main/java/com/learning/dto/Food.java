@@ -28,7 +28,6 @@ import lombok.ToString;
 public class Food {
 
 	@Id
-	@NotNull
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int foodId;
 	
